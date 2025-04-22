@@ -1,5 +1,5 @@
-use actix_web::{get, post, web, App, HttpResponse, HttpServer, Responder};
-use juniper::http::{graphiql::graphiql_source, GraphQLRequest};
+use actix_web::{get, web, App, HttpResponse, HttpServer, Responder};
+use juniper::http::{graphiql::graphiql_source};
 
 #[get("/")]
 async fn hello() -> impl Responder {
@@ -15,7 +15,7 @@ async fn graphql_playground() -> impl Responder {
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
     HttpServer::new(|| App::new().service(hello).service(graphql_playground))
-        .bind(("127.0.0.1", 8080))?
+        .bind(("0.0.0.0", 8080))?
         .run()
         .await
 }
