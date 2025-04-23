@@ -1,3 +1,4 @@
+use actix_files as fs;
 use actix_web::{get, web, App, HttpResponse, HttpServer, Responder};
 use juniper::http::graphiql::graphiql_source;
 
@@ -14,8 +15,13 @@ async fn graphql_playground() -> impl Responder {
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    HttpServer::new(|| App::new().service(hello).service(graphql_playground))
-        .bind(("0.0.0.0", 8080))?
-        .run()
-        .await
+    HttpServer::new(|| {
+        App::new()
+            .service(hello)
+            .service(graphql_playground)
+            .service(fs::Files::new("/app/assets", "."))
+    })
+    .bind(("0.0.0.0", 8080))?
+    .run()
+    .await
 }
