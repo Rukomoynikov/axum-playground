@@ -1,0 +1,25 @@
+services:
+  backend:
+    build:
+      context: .
+      dockerfile_inline: |
+        FROM rust:latest AS builder
+        WORKDIR /app
+        RUN cargo install cargo-watch
+        COPY Cargo.toml Cargo.lock ./
+    volumes:
+      - .:/app
+    ports:
+      - "8080:8080"
+    command: cargo watch -x run
+  frontend:
+    build:
+      context: ./client
+      dockerfile_inline: |
+        FROM node:alpine
+        WORKDIR /app
+        COPY package.json ./
+        RUN npm install
+    ports:
+      - "3000:3000"
+    command: npm run dev

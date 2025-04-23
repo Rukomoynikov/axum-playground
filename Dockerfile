@@ -7,4 +7,4 @@ FROM rust:latest AS release
 WORKDIR /app
 COPY --from=builder /app/target/release/web-with-graphql /app/web-with-graphql
 
-ENTRYPOINT ["/app/web-with-graphql"]
+CMD ["/app/web-with-graphql"]
