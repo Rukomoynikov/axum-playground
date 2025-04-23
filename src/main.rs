@@ -1,5 +1,5 @@
 use actix_web::{get, web, App, HttpResponse, HttpServer, Responder};
-use juniper::http::{graphiql::graphiql_source};
+use juniper::http::graphiql::graphiql_source;
 
 #[get("/")]
 async fn hello() -> impl Responder {
